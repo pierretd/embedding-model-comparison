@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Embedding Evaluation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding-top: 2rem;
+      background-color: #f8f9fa;
+    }
+    .card {
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border: none;
+    }
+    .card-header {
+      background-color: #343a40;
+      color: white;
+      font-weight: 600;
+    }
+    .table th {
+      font-weight: 600;
+    }
+    .description {
+      margin-bottom: 2rem;
+      text-align: justify;
+      line-height: 1.6;
+    }
+    .chart-container {
+      position: relative;
+      height: 300px;
+      margin-bottom: 2rem;
+    }
+    .model-card {
+      height: 100%;
+    }
+    .best-score {
+      background-color: #d4edda;
+    }
+    pre {
+      background-color: #f8f9fa;
+      padding: 1rem;
+      border-radius: 0.25rem;
+      font-size: 0.9rem;
+    }
+    .metric-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .evaluation-section {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border-radius: 0.25rem;
+      background-color: #f8f9fa;
+    }
+    #progress-container {
+      display: none;
+    }
+    .upload-card {
+      transition: all 0.3s ease;
+    }
+    .upload-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mb-4 text-center">Document Embedding Evaluation</h1>
+    
+    <!-- Current Document Info -->
+    <div class="card mb-4" id="document-info-card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span>Current Document</span>
+        <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()">
+          <i class="bi bi-arrow-clockwise"></i> Refresh
+        </button>
+      </div>
+      <div class="card-body" id="document-info">
+        <p class="mb-0">Loading document information...</p>
+      </div>
+    </div>
+    
+    <!-- New upload card -->
+    <div class="card upload-card mb-4">
+      <div class="card-header">
+        Upload Your Document
+      </div>
+      <div class="card-body">
+        <form id="upload-form" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="document-file" class="form-label">Select a text document to evaluate</label>
+            <input class="form-control" type="file" id="document-file" name="document" accept=".txt">
+            <div class="form-text">Upload a plain text (.txt) file to evaluate embedding models on your own content.</div>
+          </div>
+          
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" value="" id="default-models" checked>
+            <label class="form-check-label" for="default-models">
+              Use default models (BGE, MiniLM, GTE)
+            </label>
+          </div>
+          
+          <div id="progress-container" class="mb-3">
+            <div class="progress">
+              <div id="upload-progress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+            </div>
+            <div id="status-message" class="mt-2">Uploading document...</div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary" id="upload-button">Run Evaluation</button>
+        </form>
+      </div>
+    </div>
+    
+    <div class="description">
+      <p>This dashboard compares different embedding models on their ability to understand and represent document structure and semantics. 
+      The models are evaluated using three key metrics:</p>
+      <ul>
+        <li><strong>Paragraph Coherence</strong>: How well the model captures semantic relationships between consecutive paragraphs</li>
+        <li><strong>Section Boundary Contrast</strong>: The model's ability to distinguish between content in different sections vs. the same section</li>
+        <li><strong>Semantic Search Precision</strong>: How accurately the model retrieves relevant sentences for topical queries</li>
+      </ul>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header">
+        Overall Performance
+      </div>
+      <div class="card-body">
+        <div class="chart-container">
+          <canvas id="overallChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">Paragraph Coherence</div>
+          <div class="card-body">
+            <div class="chart-container">
+              <canvas id="coherenceChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">Section Boundary Contrast</div>
+          <div class="card-body">
+            <div class="chart-container">
+              <canvas id="sectionChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">Search Precision</div>
+          <div class="card-body">
+            <div class="chart-container">
+              <canvas id="searchChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-4">
+      <div class="card-header">
+        Detailed Results
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Overall Score</th>
+                <th>Paragraph Coherence</th>
+                <th>Section Boundary</th>
+                <th>Search Precision</th>
+                <th>Eval Time (s)</th>
+              </tr>
+            </thead>
+            <tbody id="resultsTableBody">
+              <!-- Table rows will be inserted here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-4">
+      <div class="card-header">
+        Evaluation Method
+      </div>
+      <div class="card-body">
+        <div class="evaluation-section">
+          <div class="metric-title">1. Paragraph Coherence</div>
+          <p>Measures how semantically similar adjacent paragraphs are compared to non-adjacent ones. Higher values indicate the model better captures the flow of ideas through the document.</p>
+          <pre>coherence_score = cosine_similarity(paragraph_i, paragraph_i+1)</pre>
+        </div>
+        
+        <div class="evaluation-section">
+          <div class="metric-title">2. Section Boundary Contrast</div>
+          <p>Compares the similarity of paragraphs within the same section versus paragraphs from different sections. Higher positive values show the model effectively distinguishes section boundaries.</p>
+          <pre>section_contrast = avg_within_section_similarity - avg_cross_section_similarity</pre>
+        </div>
+        
+        <div class="evaluation-section">
+          <div class="metric-title">3. Semantic Search Precision</div>
+          <p>Tests the model's ability to retrieve relevant information based on natural language queries. Higher values indicate better semantic understanding for retrieval tasks.</p>
+          <pre>precision = (relevant_keywords_in_top_results) / total_expected_keywords</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Handle file upload
+    document.getElementById('upload-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const fileInput = document.getElementById('document-file');
+      if (!fileInput.files || fileInput.files.length === 0) {
+        alert('Please select a file to upload');
+        return;
+      }
+      
+      const file = fileInput.files[0];
+      if (file.type !== 'text/plain' && !file.name.endsWith('.txt')) {
+        alert('Please upload a text file (.txt)');
+        return;
+      }
+      
+      // Show progress
+      const progressContainer = document.getElementById('progress-container');
+      const progressBar = document.getElementById('upload-progress');
+      const statusMessage = document.getElementById('status-message');
+      const uploadButton = document.getElementById('upload-button');
+      
+      progressContainer.style.display = 'block';
+      uploadButton.disabled = true;
+      progressBar.style.width = '0%';
+      statusMessage.textContent = 'Uploading document...';
+      
+      const formData = new FormData();
+      formData.append('document', file);
+      formData.append('use_default_models', document.getElementById('default-models').checked);
+      
+      try {
+        // Upload the file
+        progressBar.style.width = '30%';
+        statusMessage.textContent = 'Processing document...';
+        
+        const response = await fetch('/upload_document', {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Upload failed: ${response.statusText}`);
+        }
+        
+        progressBar.style.width = '50%';
+        statusMessage.textContent = 'Running model evaluations...';
+        
+        // Poll for status
+        let resultReady = false;
+        while (!resultReady) {
+          await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds
+          
+          const statusResponse = await fetch('/evaluation_status');
+          const statusData = await statusResponse.json();
+          
+          if (statusData.status === 'completed') {
+            resultReady = true;
+            progressBar.style.width = '100%';
+            statusMessage.textContent = 'Evaluation complete!';
+            
+            // Reload the results with cache-busting query parameter
+            await loadEvaluationData(true);
+            
+            // Reset form
+            setTimeout(() => {
+              progressContainer.style.display = 'none';
+              uploadButton.disabled = false;
+            }, 2000);
+          } else if (statusData.status === 'processing') {
+            // Update progress
+            const progress = statusData.progress || 70;
+            progressBar.style.width = `${Math.min(90, progress)}%`;
+            statusMessage.textContent = statusData.message || 'Processing...';
+          } else if (statusData.status === 'error') {
+            throw new Error(statusData.message || 'Evaluation failed');
+          }
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        progressBar.className = 'progress-bar bg-danger';
+        statusMessage.textContent = `Error: ${error.message}`;
+        
+        // Reset form after error
+        setTimeout(() => {
+          progressContainer.style.display = 'none';
+          uploadButton.disabled = false;
+          progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated';
+        }, 5000);
+      }
+    });
+  
+    // Load the evaluation results
+    async function loadEvaluationData(bustCache = true) {
+      try {
+        // Always add cache-busting query parameter
+        const cacheBuster = `?t=${new Date().getTime()}`;
+        const response = await fetch(`document_evaluation_results.json${cacheBuster}`);
+        
+        if (!response.ok) {
+          throw new Error(`Failed to load data: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        
+        // Remove the empty placeholder if other data exists
+        if (Object.keys(data).length > 1 && data.hasOwnProperty('empty')) {
+          delete data.empty;
+        }
+        
+        // Check if we have any valid models
+        if (Object.keys(data).length === 0) {
+          throw new Error("No evaluation data found");
+        }
+        
+        await displayResults(data);
+        return data;
+      } catch (error) {
+        console.error('Error loading evaluation data:', error);
+        document.querySelector('.container').innerHTML = `
+          <div class="alert alert-danger">
+            <h4>Error loading evaluation data</h4>
+            <p>${error.message}</p>
+            <p>Please make sure you've run at least one evaluation or try refreshing the page.</p>
+            <button class="btn btn-primary mt-3" onclick="location.reload()">Refresh Page</button>
+          </div>`;
+        return null;
+      }
+    }
+
+    // Process and display the data
+    async function displayEvaluationData() {
+      await loadEvaluationData();
+    }
+    
+    // Display results from the data
+    async function displayResults(data) {
+      if (!data) {
+        return;
+      }
+      
+      // Update document info
+      updateDocumentInfo(data);
+
+      // Check if we only have the placeholder data
+      if (Object.keys(data).length === 1 && data.hasOwnProperty('empty')) {
+        // Hide charts and show placeholder messages
+        document.querySelectorAll('.chart-container').forEach(container => {
+          container.innerHTML = `
+            <div class="alert alert-secondary h-100 d-flex align-items-center justify-content-center">
+              <div class="text-center">
+                <i class="bi bi-bar-chart-line fs-1 mb-3"></i>
+                <p>No data available</p>
+              </div>
+            </div>
+          `;
+        });
+        
+        document.getElementById('resultsTableBody').innerHTML = `
+          <tr>
+            <td colspan="6" class="text-center py-4">
+              <div class="alert alert-info mb-0">
+                <h5><i class="bi bi-info-circle"></i> No evaluation data</h5>
+                <p>Upload a document to run an evaluation.</p>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+      
+      // Remove the empty placeholder if it exists alongside real data
+      if (data.hasOwnProperty('empty') && Object.keys(data).length > 1) {
+        delete data.empty;
+      }
+
+      // Extract model names and metrics
+      const modelNames = Object.keys(data);
+      const overallScores = modelNames.map(name => data[name].overall_score);
+      const coherenceScores = modelNames.map(name => data[name].coherence.avg_coherence);
+      const sectionScores = modelNames.map(name => data[name].section_boundaries.section_boundary_contrast);
+      const searchScores = modelNames.map(name => data[name].semantic_search.semantic_search_precision);
+      const evalTimes = modelNames.map(name => data[name].evaluation_time_seconds);
+
+      // Find the best model for each metric
+      const bestOverallIndex = overallScores.indexOf(Math.max(...overallScores));
+      const bestCoherenceIndex = coherenceScores.indexOf(Math.max(...coherenceScores));
+      const bestSectionIndex = sectionScores.indexOf(Math.max(...sectionScores));
+      const bestSearchIndex = searchScores.indexOf(Math.max(...searchScores));
+
+      // Create the overall performance chart
+      const overallCtx = document.getElementById('overallChart').getContext('2d');
+      // Clear existing chart if any
+      if (window.overallChart instanceof Chart) {
+        window.overallChart.destroy();
+      }
+      window.overallChart = new Chart(overallCtx, {
+        type: 'bar',
+        data: {
+          labels: modelNames,
+          datasets: [
+            {
+              label: 'Overall Score',
+              data: overallScores,
+              backgroundColor: modelNames.map((_, i) => 
+                i === bestOverallIndex ? 'rgba(40, 167, 69, 0.7)' : 'rgba(0, 123, 255, 0.7)'
+              ),
+              borderColor: modelNames.map((_, i) => 
+                i === bestOverallIndex ? 'rgba(40, 167, 69, 1)' : 'rgba(0, 123, 255, 1)'
+              ),
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 1,
+              title: {
+                display: true,
+                text: 'Score (higher is better)'
+              }
+            }
+          },
+          plugins: {
+            title: {
+              display: true,
+              text: 'Overall Evaluation Score'
+            }
+          },
+          maintainAspectRatio: false
+        }
+      });
+
+      // Create the coherence chart
+      const coherenceCtx = document.getElementById('coherenceChart').getContext('2d');
+      if (window.coherenceChart instanceof Chart) {
+        window.coherenceChart.destroy();
+      }
+      window.coherenceChart = new Chart(coherenceCtx, {
+        type: 'bar',
+        data: {
+          labels: modelNames,
+          datasets: [
+            {
+              label: 'Paragraph Coherence',
+              data: coherenceScores,
+              backgroundColor: modelNames.map((_, i) => 
+                i === bestCoherenceIndex ? 'rgba(40, 167, 69, 0.7)' : 'rgba(220, 53, 69, 0.7)'
+              ),
+              borderColor: modelNames.map((_, i) => 
+                i === bestCoherenceIndex ? 'rgba(40, 167, 69, 1)' : 'rgba(220, 53, 69, 1)'
+              ),
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 1,
+              title: {
+                display: true,
+                text: 'Coherence Score'
+              }
+            }
+          },
+          maintainAspectRatio: false
+        }
+      });
+
+      // Create the section boundary chart
+      const sectionCtx = document.getElementById('sectionChart').getContext('2d');
+      if (window.sectionChart instanceof Chart) {
+        window.sectionChart.destroy();
+      }
+      window.sectionChart = new Chart(sectionCtx, {
+        type: 'bar',
+        data: {
+          labels: modelNames,
+          datasets: [
+            {
+              label: 'Section Boundary Contrast',
+              data: sectionScores.map(score => Math.max(score, -1)),  // Cap negative values at -1 for display
+              backgroundColor: modelNames.map((_, i) => 
+                i === bestSectionIndex ? 'rgba(40, 167, 69, 0.7)' : 'rgba(255, 193, 7, 0.7)'
+              ),
+              borderColor: modelNames.map((_, i) => 
+                i === bestSectionIndex ? 'rgba(40, 167, 69, 1)' : 'rgba(255, 193, 7, 1)'
+              ),
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          scales: {
+            y: {
+              min: -1,
+              max: 1,
+              title: {
+                display: true,
+                text: 'Contrast Score'
+              }
+            }
+          },
+          maintainAspectRatio: false
+        }
+      });
+
+      // Create the search precision chart
+      const searchCtx = document.getElementById('searchChart').getContext('2d');
+      if (window.searchChart instanceof Chart) {
+        window.searchChart.destroy();
+      }
+      window.searchChart = new Chart(searchCtx, {
+        type: 'bar',
+        data: {
+          labels: modelNames,
+          datasets: [
+            {
+              label: 'Search Precision',
+              data: searchScores,
+              backgroundColor: modelNames.map((_, i) => 
+                i === bestSearchIndex ? 'rgba(40, 167, 69, 0.7)' : 'rgba(102, 16, 242, 0.7)'
+              ),
+              borderColor: modelNames.map((_, i) => 
+                i === bestSearchIndex ? 'rgba(40, 167, 69, 1)' : 'rgba(102, 16, 242, 1)'
+              ),
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 1,
+              title: {
+                display: true,
+                text: 'Precision Score'
+              }
+            }
+          },
+          maintainAspectRatio: false
+        }
+      });
+
+      // Populate the results table
+      const tableBody = document.getElementById('resultsTableBody');
+      tableBody.innerHTML = ''; // Clear existing rows
+      
+      // Sort models by overall score
+      const sortedModels = [...modelNames].sort((a, b) => 
+        data[b].overall_score - data[a].overall_score
+      );
+      
+      sortedModels.forEach(name => {
+        const modelData = data[name];
+        const row = document.createElement('tr');
+        
+        // Highlight best model
+        if (name === modelNames[bestOverallIndex]) {
+          row.classList.add('best-score');
+        }
+        
+        row.innerHTML = `
+          <td>${name}</td>
+          <td>${modelData.overall_score.toFixed(4)}</td>
+          <td>${modelData.coherence.avg_coherence.toFixed(4)}</td>
+          <td>${modelData.section_boundaries.section_boundary_contrast.toFixed(4)}</td>
+          <td>${modelData.semantic_search.semantic_search_precision.toFixed(4)}</td>
+          <td>${modelData.evaluation_time_seconds.toFixed(2)}s</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Update document info section
+    function updateDocumentInfo(data) {
+      const infoElement = document.getElementById('document-info');
+      
+      // Check if we only have the placeholder data
+      if (Object.keys(data).length === 1 && data.hasOwnProperty('empty')) {
+        infoElement.innerHTML = `
+          <div class="alert alert-info mb-0">
+            <h5><i class="bi bi-info-circle"></i> No evaluations yet</h5>
+            <p>Upload a document to evaluate embedding models on your content.</p>
+          </div>
+        `;
+        return;
+      }
+      
+      // Check if we have evaluation status info from server
+      fetch('/evaluation_status')
+        .then(response => response.json())
+        .then(status => {
+          // If a document name is available, show it
+          if (status.document_name) {
+            infoElement.innerHTML = `
+              <div class="row">
+                <div class="col-md-8">
+                  <h5>Current document: <span class="text-primary">${status.document_name}</span></h5>
+                  <p>Evaluated with ${Object.keys(data).filter(key => key !== 'empty').length} embedding models.</p>
+                </div>
+                <div class="col-md-4 text-end">
+                  <span class="badge bg-success">Completed</span>
+                </div>
+              </div>
+            `;
+          } else {
+            // Show sample data notice if no document info
+            infoElement.innerHTML = `
+              <div class="alert alert-secondary mb-0">
+                <h5><i class="bi bi-bar-chart-line"></i> Viewing previous evaluation results</h5>
+                <p class="mb-0">Upload a new document to compare embedding models on your own content.</p>
+              </div>
+            `;
+          }
+        })
+        .catch(err => {
+          // Show a generic message if we can't get status
+          infoElement.innerHTML = `
+            <div class="alert alert-secondary mb-0">
+              <h5><i class="bi bi-bar-chart-line"></i> Viewing evaluation results</h5>
+              <p class="mb-0">Upload a document to compare embedding models on your own content.</p>
+            </div>
+          `;
+        });
+    }
+
+    // Initialize the dashboard
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        await displayEvaluationData();
+      } catch (e) {
+        console.error("Error initializing dashboard:", e);
+        
+        // Show a fallback message if loading fails
+        document.querySelectorAll('.chart-container').forEach(container => {
+          container.innerHTML = `
+            <div class="alert alert-secondary h-100 d-flex align-items-center justify-content-center">
+              <div class="text-center">
+                <i class="bi bi-bar-chart-line fs-1 mb-3"></i>
+                <p>No data available</p>
+              </div>
+            </div>
+          `;
+        });
+        
+        document.getElementById('resultsTableBody').innerHTML = `
+          <tr>
+            <td colspan="6" class="text-center py-4">
+              <div class="alert alert-info mb-0">
+                <h5><i class="bi bi-info-circle"></i> No evaluation data</h5>
+                <p>Upload a document to run an evaluation.</p>
+              </div>
+            </td>
+          </tr>
+        `;
+      }
+    });
+  </script>
+</body>
+</html> 

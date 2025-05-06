@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Embedding Model Comparison</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding-top: 2rem;
+      background-color: #f8f9fa;
+    }
+    .card {
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border: none;
+    }
+    .card-header {
+      background-color: #343a40;
+      color: white;
+      font-weight: 600;
+    }
+    .table th {
+      font-weight: 600;
+    }
+    .description {
+      margin-bottom: 2rem;
+      text-align: justify;
+      line-height: 1.6;
+    }
+    .chart-container {
+      position: relative;
+      height: 300px;
+      margin-bottom: 2rem;
+    }
+    .model-card {
+      height: 100%;
+    }
+    .model-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: #343a40;
+    }
+    .badge-dimension {
+      background-color: #6c757d;
+    }
+    .badge-time {
+      background-color: #28a745;
+    }
+    .badge-correlation {
+      background-color: #007bff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mb-4 text-center">Embedding Model Comparison</h1>
+    
+    <div class="description">
+      <p>This dashboard compares different embedding models on their performance for semantic similarity tasks. 
+      The models are evaluated based on correlation with human judgment scores, processing speed, and embedding dimensions.</p>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header">
+        Correlation Performance
+      </div>
+      <div class="card-body">
+        <div class="chart-container">
+          <canvas id="correlationChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header">
+        Speed Performance
+      </div>
+      <div class="card-body">
+        <div class="chart-container">
+          <canvas id="speedChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        Detailed Comparison
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Pearson</th>
+                <th>Spearman</th>
+                <th>Dimensions</th>
+                <th>Load Time (s)</th>
+                <th>Embed Time (s)</th>
+              </tr>
+            </thead>
+            <tbody id="comparisonTableBody">
+              <!-- Table rows will be inserted here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4" id="modelCards">
+      <!-- Model cards will be inserted here -->
+    </div>
+  </div>
+
+  <script>
+    // Load the comparison results
+    async function loadComparisonData() {
+      try {
+        const response = await fetch('embedding_comparison_results.json');
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Error loading comparison data:', error);
+        return null;
+      }
+    }
+
+    // Process and display the data
+    async function displayComparisonData() {
+      const data = await loadComparisonData();
+      if (!data) {
+        document.querySelector('.container').innerHTML = '<div class="alert alert-danger">Error loading comparison data. Please make sure the embedding_comparison_results.json file exists.</div>';
+        return;
+      }
+
+      // Extract model names and metrics
+      const modelNames = Object.keys(data);
+      const pearsonCorrelations = modelNames.map(name => data[name].pearson_correlation);
+      const spearmanCorrelations = modelNames.map(name => data[name].spearman_correlation);
+      const loadTimes = modelNames.map(name => data[name].load_time_seconds);
+      const embedTimes = modelNames.map(name => data[name].average_embedding_time_seconds);
+      const dimensions = modelNames.map(name => data[name].embedding_dimension);
+
+      // Create the correlation chart
+      const correlationCtx = document.getElementById('correlationChart').getContext('2d');
+      new Chart(correlationCtx, {
+        type: 'bar',
+        data: {
+          labels: modelNames,
+          datasets: [
+            {
+              label: 'Pearson Correlation',
+              data: pearsonCorrelations,
+              backgroundColor: 'rgba(0, 123, 255, 0.5)',
+              borderColor: 'rgba(0, 123, 255, 1)',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 1,
+              title: {
+                display: true,
+                text: 'Correlation (higher is better)'
+              }
+            }
+          },
+          plugins: {
+            title: {
+              display: true,
+              text: 'Correlation with Human Judgment'
+            }
+          },
+          maintainAspectRatio: false
+        }
+      });
+
+      // Create the speed chart
+      const speedCtx = document.getElementById('speedChart').getContext('2d');
+      new Chart(speedCtx, {
+        type: 'bar',
+        data: {
+          labels: modelNames,
+          datasets: [
+            {
+              label: 'Load Time (s)',
+              data: loadTimes,
+              backgroundColor: 'rgba(255, 99, 132, 0.5)',
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Embedding Time (s)',
+              data: embedTimes,
+              backgroundColor: 'rgba(54, 162, 235, 0.5)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Time in seconds (lower is better)'
+              }
+            }
+          },
+          plugins: {
+            title: {
+              display: true,
+              text: 'Processing Speed'
+            }
+          },
+          maintainAspectRatio: false
+        }
+      });
+
+      // Populate the comparison table
+      const tableBody = document.getElementById('comparisonTableBody');
+      modelNames.forEach(name => {
+        const model = data[name];
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${name}</td>
+          <td>${model.pearson_correlation.toFixed(4)}</td>
+          <td>${model.spearman_correlation.toFixed(4)}</td>
+          <td>${model.embedding_dimension}</td>
+          <td>${model.load_time_seconds.toFixed(2)}</td>
+          <td>${model.average_embedding_time_seconds.toFixed(4)}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+
+      // Create model cards
+      const modelCardsContainer = document.getElementById('modelCards');
+      modelNames.forEach(name => {
+        const model = data[name];
+        const card = document.createElement('div');
+        card.className = 'col-md-4 mb-4';
+        card.innerHTML = `
+          <div class="card model-card">
+            <div class="card-body text-center">
+              <div class="model-icon">📊</div>
+              <h5 class="card-title">${name}</h5>
+              <p class="card-text">
+                <span class="badge badge-correlation rounded-pill">${model.pearson_correlation.toFixed(4)} Pearson</span>
+                <span class="badge badge-dimension rounded-pill">${model.embedding_dimension} dims</span>
+                <span class="badge badge-time rounded-pill">${model.average_embedding_time_seconds.toFixed(3)}s/embed</span>
+              </p>
+              <p class="card-text small">Model ID: ${model.model_id}</p>
+            </div>
+          </div>
+        `;
+        modelCardsContainer.appendChild(card);
+      });
+    }
+
+    // Initialize the dashboard
+    document.addEventListener('DOMContentLoaded', displayComparisonData);
+  </script>
+</body>
+</html> 

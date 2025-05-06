@@ -1,0 +1,814 @@
+{
+  "bge-small-en-v1.5": {
+    "model_name": "bge-small-en-v1.5",
+    "model_id": "BAAI/bge-small-en-v1.5",
+    "load_time_seconds": 8.135278940200806,
+    "average_embedding_time_seconds": 1.7427881002426147,
+    "pearson_correlation": 0.9119900041217643,
+    "spearman_correlation": 0.9999999999999999,
+    "embedding_dimension": 384,
+    "pairs": [
+      {
+        "text1": "I love listening to rock music.",
+        "text2": "Rock music is my favorite genre.",
+        "human_score": 0.9,
+        "similarity": 0.9457922577857971,
+        "embedding1_sample": [
+          0.020119570195674896,
+          0.019193502143025398,
+          0.047604624181985855,
+          -0.02701500616967678,
+          -0.023622823879122734
+        ],
+        "embedding2_sample": [
+          0.01239581685513258,
+          -0.0020135948434472084,
+          0.029400553554296494,
+          -0.03272638097405434,
+          -0.017518077045679092
+        ],
+        "embedding_dimension": 384
+      },
+      {
+        "text1": "This album has complex jazz fusion elements.",
+        "text2": "The record incorporates experimental jazz techniques.",
+        "human_score": 0.85,
+        "similarity": 0.7672313451766968,
+        "embedding1_sample": [
+          -0.028410449624061584,
+          -0.03660554811358452,
+          0.019253792241215706,
+          -0.01905820332467556,
+          0.010487972758710384
+        ],
+        "embedding2_sample": [
+          -0.014327961951494217,
+          0.0554056316614151,
+          0.022108502686023712,
+          -0.009968551807105541,
+          -0.008572692051529884
+        ],
+        "embedding_dimension": 384
+      },
+      {
+        "text1": "The vocalist has a powerful voice.",
+        "text2": "The guitar solos are impressive.",
+        "human_score": 0.3,
+        "similarity": 0.6567733287811279,
+        "embedding1_sample": [
+          -0.0030172462575137615,
+          -0.020092692226171494,
+          2.528558070480358e-05,
+          -0.028189007192850113,
+          -0.07050516456365585
+        ],
+        "embedding2_sample": [
+          -0.02432287484407425,
+          0.003656877437606454,
+          0.06363780796527863,
+          -0.010423521511256695,
+          0.007268473505973816
+        ],
+        "embedding_dimension": 384
+      },
+      {
+        "text1": "This hip-hop album addresses social issues.",
+        "text2": "The rapper discusses political topics in their lyrics.",
+        "human_score": 0.8,
+        "similarity": 0.761039137840271,
+        "embedding1_sample": [
+          0.011851569637656212,
+          0.009709510020911694,
+          -0.014721947722136974,
+          -0.055489737540483475,
+          0.06617840379476547
+        ],
+        "embedding2_sample": [
+          -0.015670977532863617,
+          0.029567057266831398,
+          0.014930233359336853,
+          -0.03703566640615463,
+          0.02404419519007206
+        ],
+        "embedding_dimension": 384
+      },
+      {
+        "text1": "The production quality is excellent.",
+        "text2": "The album sounds terrible.",
+        "human_score": 0.1,
+        "similarity": 0.4228198528289795,
+        "embedding1_sample": [
+          0.03379112854599953,
+          0.04038732126355171,
+          0.03939370438456535,
+          -0.038295354694128036,
+          0.06490830332040787
+        ],
+        "embedding2_sample": [
+          0.004479162860661745,
+          -0.023307107388973236,
+          0.08046076446771622,
+          -0.0075218407437205315,
+          0.02505774050951004
+        ],
+        "embedding_dimension": 384
+      }
+    ]
+  },
+  "bge-base-en-v1.5": {
+    "model_name": "bge-base-en-v1.5",
+    "model_id": "BAAI/bge-base-en-v1.5",
+    "load_time_seconds": 17.023777723312378,
+    "average_embedding_time_seconds": 1.938964605331421,
+    "pearson_correlation": 0.921509565896743,
+    "spearman_correlation": 0.9999999999999999,
+    "embedding_dimension": 768,
+    "pairs": [
+      {
+        "text1": "I love listening to rock music.",
+        "text2": "Rock music is my favorite genre.",
+        "human_score": 0.9,
+        "similarity": 0.8977451324462891,
+        "embedding1_sample": [
+          0.010251833125948906,
+          0.033651672303676605,
+          -0.009501621127128601,
+          -0.0010190539760515094,
+          0.019201137125492096
+        ],
+        "embedding2_sample": [
+          -0.0006857266998849809,
+          0.03218058496713638,
+          -0.007631721906363964,
+          0.014592227526009083,
+          0.030981918796896935
+        ],
+        "embedding_dimension": 768
+      },
+      {
+        "text1": "This album has complex jazz fusion elements.",
+        "text2": "The record incorporates experimental jazz techniques.",
+        "human_score": 0.85,
+        "similarity": 0.7688999772071838,
+        "embedding1_sample": [
+          -0.08195921778678894,
+          -0.00823657400906086,
+          0.03373890370130539,
+          0.02111089415848255,
+          0.03640757128596306
+        ],
+        "embedding2_sample": [
+          -0.011178460903465748,
+          -0.010036666877567768,
+          -0.038282912224531174,
+          0.023090656846761703,
+          0.039616379886865616
+        ],
+        "embedding_dimension": 768
+      },
+      {
+        "text1": "The vocalist has a powerful voice.",
+        "text2": "The guitar solos are impressive.",
+        "human_score": 0.3,
+        "similarity": 0.6537215113639832,
+        "embedding1_sample": [
+          -0.061692312359809875,
+          -0.045887161046266556,
+          -0.0018253609305247664,
+          -0.012496160343289375,
+          0.0192701518535614
+        ],
+        "embedding2_sample": [
+          -0.03712201490998268,
+          0.002505009062588215,
+          0.06005413830280304,
+          0.00266561028547585,
+          0.04941464215517044
+        ],
+        "embedding_dimension": 768
+      },
+      {
+        "text1": "This hip-hop album addresses social issues.",
+        "text2": "The rapper discusses political topics in their lyrics.",
+        "human_score": 0.8,
+        "similarity": 0.7334803938865662,
+        "embedding1_sample": [
+          -0.006172104272991419,
+          0.0018507014028728008,
+          -0.008842539973556995,
+          0.0033072414807975292,
+          -0.011960125528275967
+        ],
+        "embedding2_sample": [
+          0.007930372841656208,
+          -0.019482871517539024,
+          -0.01362812053412199,
+          0.044537998735904694,
+          0.03341555967926979
+        ],
+        "embedding_dimension": 768
+      },
+      {
+        "text1": "The production quality is excellent.",
+        "text2": "The album sounds terrible.",
+        "human_score": 0.1,
+        "similarity": 0.48271745443344116,
+        "embedding1_sample": [
+          -0.0174091886729002,
+          -0.004420174285769463,
+          0.05183766037225723,
+          -0.01332390122115612,
+          0.06923378258943558
+        ],
+        "embedding2_sample": [
+          0.0023180036805570126,
+          0.017040422186255455,
+          0.016234805807471275,
+          -0.01578347012400627,
+          0.03253605589270592
+        ],
+        "embedding_dimension": 768
+      }
+    ]
+  },
+  "all-MiniLM-L6-v2": {
+    "model_name": "all-MiniLM-L6-v2",
+    "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "load_time_seconds": 9.02787184715271,
+    "average_embedding_time_seconds": 1.488339114189148,
+    "pearson_correlation": 0.8786072030227866,
+    "spearman_correlation": 0.9999999999999999,
+    "embedding_dimension": 384,
+    "pairs": [
+      {
+        "text1": "I love listening to rock music.",
+        "text2": "Rock music is my favorite genre.",
+        "human_score": 0.9,
+        "similarity": 0.8301746249198914,
+        "embedding1_sample": [
+          0.024853015318512917,
+          -0.09778641909360886,
+          0.050270240753889084,
+          -0.025207802653312683,
+          0.028129953891038895
+        ],
+        "embedding2_sample": [
+          0.015010595321655273,
+          -0.10910601168870926,
+          0.04695701226592064,
+          -0.01552612241357565,
+          -0.013788134790956974
+        ],
+        "embedding_dimension": 384
+      },
+      {
+        "text1": "This album has complex jazz fusion elements.",
+        "text2": "The record incorporates experimental jazz techniques.",
+        "human_score": 0.85,
+        "similarity": 0.6159815192222595,
+        "embedding1_sample": [
+          -0.03805965185165405,
+          -0.013737625442445278,
+          -0.02637215331196785,
+          0.0011989206541329622,
+          -0.0856519341468811
+        ],
+        "embedding2_sample": [
+          -0.041002705693244934,
+          0.017558332532644272,
+          -0.022410256788134575,
+          -0.04062748700380325,
+          -0.12276087701320648
+        ],
+        "embedding_dimension": 384
+      },
+      {
+        "text1": "The vocalist has a powerful voice.",
+        "text2": "The guitar solos are impressive.",
+        "human_score": 0.3,
+        "similarity": 0.3943960666656494,
+        "embedding1_sample": [
+          -0.0463339127600193,
+          -0.010948223993182182,
+          -0.042458612471818924,
+          -0.050071749836206436,
+          -0.10464411973953247
+        ],
+        "embedding2_sample": [
+          -0.036007169634103775,
+          -0.014108875766396523,
+          0.007395305670797825,
+          -0.06356679648160934,
+          -0.11414487659931183
+        ],
+        "embedding_dimension": 384
+      },
+      {
+        "text1": "This hip-hop album addresses social issues.",
+        "text2": "The rapper discusses political topics in their lyrics.",
+        "human_score": 0.8,
+        "similarity": 0.472845196723938,
+        "embedding1_sample": [
+          0.022154565900564194,
+          0.07665983587503433,
+          0.013228809460997581,
+          0.04581417515873909,
+          0.0031210004817694426
+        ],
+        "embedding2_sample": [
+          0.031463269144296646,
+          -0.04127287492156029,
+          -0.03410129249095917,
+          0.023989759385585785,
+          0.06157040596008301
+        ],
+        "embedding_dimension": 384
+      },
+      {
+        "text1": "The production quality is excellent.",
+        "text2": "The album sounds terrible.",
+        "human_score": 0.1,
+        "similarity": 0.21095198392868042,
+        "embedding1_sample": [
+          -0.07514699548482895,
+          -0.030270805582404137,
+          0.02462856099009514,
+          -0.038949739187955856,
+          -0.0990123599767685
+        ],
+        "embedding2_sample": [
+          0.049683570861816406,
+          -0.0003561169432941824,
+          0.003251501591876149,
+          -0.013160848058760166,
+          -0.0875677764415741
+        ],
+        "embedding_dimension": 384
+      }
+    ]
+  },
+  "multilingual-e5-large": {
+    "model_name": "multilingual-e5-large",
+    "model_id": "intfloat/multilingual-e5-large",
+    "load_time_seconds": 48.86089110374451,
+    "average_embedding_time_seconds": 0.9101692199707031,
+    "pearson_correlation": 0.9153273060318389,
+    "spearman_correlation": 0.9999999999999999,
+    "embedding_dimension": 1024,
+    "pairs": [
+      {
+        "text1": "I love listening to rock music.",
+        "text2": "Rock music is my favorite genre.",
+        "human_score": 0.9,
+        "similarity": 0.9312525987625122,
+        "embedding1_sample": [
+          1.0616501569747925,
+          -0.5250672101974487,
+          -0.25192850828170776,
+          -0.9208657145500183,
+          0.8073675036430359
+        ],
+        "embedding2_sample": [
+          0.7825043201446533,
+          -0.8743019700050354,
+          -0.4524405598640442,
+          -0.402822345495224,
+          1.0251003503799438
+        ],
+        "embedding_dimension": 1024
+      },
+      {
+        "text1": "This album has complex jazz fusion elements.",
+        "text2": "The record incorporates experimental jazz techniques.",
+        "human_score": 0.85,
+        "similarity": 0.9174501895904541,
+        "embedding1_sample": [
+          0.8961942791938782,
+          0.15471991896629333,
+          -0.7197545170783997,
+          -0.697047233581543,
+          0.18438628315925598
+        ],
+        "embedding2_sample": [
+          -0.15769439935684204,
+          -0.18059241771697998,
+          -0.6791383028030396,
+          -0.8255256414413452,
+          0.5975556373596191
+        ],
+        "embedding_dimension": 1024
+      },
+      {
+        "text1": "The vocalist has a powerful voice.",
+        "text2": "The guitar solos are impressive.",
+        "human_score": 0.3,
+        "similarity": 0.8692672252655029,
+        "embedding1_sample": [
+          1.4767131805419922,
+          0.5992175936698914,
+          -0.16186663508415222,
+          -1.1147371530532837,
+          0.8143373131752014
+        ],
+        "embedding2_sample": [
+          0.573121964931488,
+          0.3746436536312103,
+          -0.48470956087112427,
+          -0.8834866881370544,
+          0.6463686227798462
+        ],
+        "embedding_dimension": 1024
+      },
+      {
+        "text1": "This hip-hop album addresses social issues.",
+        "text2": "The rapper discusses political topics in their lyrics.",
+        "human_score": 0.8,
+        "similarity": 0.894102156162262,
+        "embedding1_sample": [
+          0.19937847554683685,
+          -0.35824671387672424,
+          -0.12495259940624237,
+          -1.0063797235488892,
+          0.18107055127620697
+        ],
+        "embedding2_sample": [
+          0.13153499364852905,
+          0.21916626393795013,
+          -0.13644914329051971,
+          -0.5990415811538696,
+          0.4615226686000824
+        ],
+        "embedding_dimension": 1024
+      },
+      {
+        "text1": "The production quality is excellent.",
+        "text2": "The album sounds terrible.",
+        "human_score": 0.1,
+        "similarity": 0.7676271796226501,
+        "embedding1_sample": [
+          0.625999927520752,
+          -0.42089414596557617,
+          -0.3026951551437378,
+          -0.09391269832849503,
+          0.47586825489997864
+        ],
+        "embedding2_sample": [
+          0.37853533029556274,
+          -0.21413208544254303,
+          -0.40895330905914307,
+          -0.6586601138114929,
+          0.3365636467933655
+        ],
+        "embedding_dimension": 1024
+      }
+    ]
+  },
+  "multilingual-MiniLM-L12-v2": {
+    "model_name": "multilingual-MiniLM-L12-v2",
+    "model_id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "load_time_seconds": 29.972172021865845,
+    "average_embedding_time_seconds": 0.4294659852981567,
+    "pearson_correlation": 0.8683660089152048,
+    "spearman_correlation": 0.9999999999999999,
+    "embedding_dimension": 384,
+    "pairs": [
+      {
+        "text1": "I love listening to rock music.",
+        "text2": "Rock music is my favorite genre.",
+        "human_score": 0.9,
+        "similarity": 0.8726427555084229,
+        "embedding1_sample": [
+          0.0012386987218633294,
+          -0.4831524193286896,
+          0.25218328833580017,
+          0.012939131818711758,
+          -0.4024955630302429
+        ],
+        "embedding2_sample": [
+          -0.22517430782318115,
+          -0.378917396068573,
+          0.13293282687664032,
+          0.038600265979766846,
+          -0.34741345047950745
+        ],
+        "embedding_dimension": 384
+      },
+      {
+        "text1": "This album has complex jazz fusion elements.",
+        "text2": "The record incorporates experimental jazz techniques.",
+        "human_score": 0.85,
+        "similarity": 0.6694336533546448,
+        "embedding1_sample": [
+          -0.08122618496417999,
+          0.05190363898873329,
+          0.07897903025150299,
+          -0.2799808979034424,
+          -0.45953765511512756
+        ],
+        "embedding2_sample": [
+          -0.040909018367528915,
+          0.23333005607128143,
+          -0.23062872886657715,
+          -0.3088488280773163,
+          -0.7781191468238831
+        ],
+        "embedding_dimension": 384
+      },
+      {
+        "text1": "The vocalist has a powerful voice.",
+        "text2": "The guitar solos are impressive.",
+        "human_score": 0.3,
+        "similarity": 0.48754918575286865,
+        "embedding1_sample": [
+          0.07955202460289001,
+          -0.09903675317764282,
+          -0.18011824786663055,
+          0.17939527332782745,
+          -0.5292872190475464
+        ],
+        "embedding2_sample": [
+          -0.08420760929584503,
+          -0.10944874584674835,
+          -0.26533928513526917,
+          -0.1517699956893921,
+          -0.6657639145851135
+        ],
+        "embedding_dimension": 384
+      },
+      {
+        "text1": "This hip-hop album addresses social issues.",
+        "text2": "The rapper discusses political topics in their lyrics.",
+        "human_score": 0.8,
+        "similarity": 0.529693067073822,
+        "embedding1_sample": [
+          -0.04566377401351929,
+          -0.1878768354654312,
+          -0.17905978858470917,
+          0.08971069753170013,
+          0.09910281747579575
+        ],
+        "embedding2_sample": [
+          0.2216610610485077,
+          0.07609838992357254,
+          -0.22008082270622253,
+          0.17418959736824036,
+          0.09617705643177032
+        ],
+        "embedding_dimension": 384
+      },
+      {
+        "text1": "The production quality is excellent.",
+        "text2": "The album sounds terrible.",
+        "human_score": 0.1,
+        "similarity": -0.19874346256256104,
+        "embedding1_sample": [
+          0.004229555372148752,
+          -0.3002506494522095,
+          -0.11749247461557388,
+          -0.16603903472423553,
+          -0.2614530324935913
+        ],
+        "embedding2_sample": [
+          -0.09837264567613602,
+          -0.4348228871822357,
+          0.268819659948349,
+          -0.15640026330947876,
+          -0.0003758629027288407
+        ],
+        "embedding_dimension": 384
+      }
+    ]
+  },
+  "gte-large": {
+    "model_name": "gte-large",
+    "model_id": "thenlper/gte-large",
+    "load_time_seconds": 42.176676988601685,
+    "average_embedding_time_seconds": 1.3172043085098266,
+    "pearson_correlation": 0.992452098069639,
+    "spearman_correlation": 0.9999999999999999,
+    "embedding_dimension": 1024,
+    "pairs": [
+      {
+        "text1": "I love listening to rock music.",
+        "text2": "Rock music is my favorite genre.",
+        "human_score": 0.9,
+        "similarity": 0.9530268907546997,
+        "embedding1_sample": [
+          -0.025595540180802345,
+          0.00401261867955327,
+          -0.012788593769073486,
+          0.003663354553282261,
+          0.016362763941287994
+        ],
+        "embedding2_sample": [
+          -0.023461202159523964,
+          -0.0028844308108091354,
+          -0.006409892346709967,
+          0.005609873216599226,
+          -0.0032903803512454033
+        ],
+        "embedding_dimension": 1024
+      },
+      {
+        "text1": "This album has complex jazz fusion elements.",
+        "text2": "The record incorporates experimental jazz techniques.",
+        "human_score": 0.85,
+        "similarity": 0.91476970911026,
+        "embedding1_sample": [
+          -0.011649961583316326,
+          -0.012998254038393497,
+          -0.02406344562768936,
+          -0.01134768221527338,
+          0.01679966412484646
+        ],
+        "embedding2_sample": [
+          -0.003477489110082388,
+          -0.00938007514923811,
+          -0.03604087978601456,
+          -0.030941762030124664,
+          -0.012951196171343327
+        ],
+        "embedding_dimension": 1024
+      },
+      {
+        "text1": "The vocalist has a powerful voice.",
+        "text2": "The guitar solos are impressive.",
+        "human_score": 0.3,
+        "similarity": 0.809863805770874,
+        "embedding1_sample": [
+          -0.030162246897816658,
+          -0.006273163948208094,
+          -0.0038775859866291285,
+          0.002252244157716632,
+          0.013758081942796707
+        ],
+        "embedding2_sample": [
+          0.0017672765534371138,
+          0.013815476559102535,
+          0.002985225059092045,
+          -0.0004092313756700605,
+          0.013796301558613777
+        ],
+        "embedding_dimension": 1024
+      },
+      {
+        "text1": "This hip-hop album addresses social issues.",
+        "text2": "The rapper discusses political topics in their lyrics.",
+        "human_score": 0.8,
+        "similarity": 0.9137836694717407,
+        "embedding1_sample": [
+          0.012269443832337856,
+          0.005674607586115599,
+          -0.026980407536029816,
+          0.02282222919166088,
+          0.014654632657766342
+        ],
+        "embedding2_sample": [
+          0.014619192108511925,
+          -0.0017445943085476756,
+          -0.009860818274319172,
+          0.01711435616016388,
+          0.008250669576227665
+        ],
+        "embedding_dimension": 1024
+      },
+      {
+        "text1": "The production quality is excellent.",
+        "text2": "The album sounds terrible.",
+        "human_score": 0.1,
+        "similarity": 0.7574140429496765,
+        "embedding1_sample": [
+          -0.006552200298756361,
+          0.025653742253780365,
+          -0.023271556943655014,
+          0.010389630682766438,
+          -0.003450673772022128
+        ],
+        "embedding2_sample": [
+          0.0069052898325026035,
+          0.007052415981888771,
+          0.0074283466674387455,
+          -0.014538432471454144,
+          -0.0007995241321623325
+        ],
+        "embedding_dimension": 1024
+      }
+    ]
+  },
+  "nomic-embed-text-v1.5": {
+    "model_name": "nomic-embed-text-v1.5",
+    "model_id": "nomic-ai/nomic-embed-text-v1.5",
+    "load_time_seconds": 28.637338161468506,
+    "average_embedding_time_seconds": 0.6644982099533081,
+    "pearson_correlation": 0.9723780339295751,
+    "spearman_correlation": 0.9999999999999999,
+    "embedding_dimension": 768,
+    "pairs": [
+      {
+        "text1": "I love listening to rock music.",
+        "text2": "Rock music is my favorite genre.",
+        "human_score": 0.9,
+        "similarity": 0.8865452408790588,
+        "embedding1_sample": [
+          0.53487229347229,
+          0.31583523750305176,
+          -3.732074499130249,
+          -0.3889128863811493,
+          -0.25824207067489624
+        ],
+        "embedding2_sample": [
+          0.9326831698417664,
+          0.10533856600522995,
+          -3.9690709114074707,
+          -0.18316824734210968,
+          -0.5018675327301025
+        ],
+        "embedding_dimension": 768
+      },
+      {
+        "text1": "This album has complex jazz fusion elements.",
+        "text2": "The record incorporates experimental jazz techniques.",
+        "human_score": 0.85,
+        "similarity": 0.7742523550987244,
+        "embedding1_sample": [
+          0.6596543788909912,
+          0.8695768713951111,
+          -4.587868690490723,
+          0.040107712149620056,
+          -0.14593398571014404
+        ],
+        "embedding2_sample": [
+          0.5168959498405457,
+          0.6270812153816223,
+          -4.6602277755737305,
+          -0.9302844405174255,
+          0.21067236363887787
+        ],
+        "embedding_dimension": 768
+      },
+      {
+        "text1": "The vocalist has a powerful voice.",
+        "text2": "The guitar solos are impressive.",
+        "human_score": 0.3,
+        "similarity": 0.5978057384490967,
+        "embedding1_sample": [
+          -0.4729863107204437,
+          0.5466663837432861,
+          -4.443185806274414,
+          0.33300328254699707,
+          -0.07917805761098862
+        ],
+        "embedding2_sample": [
+          -0.2906927466392517,
+          0.8213542103767395,
+          -4.8202009201049805,
+          -0.11657629907131195,
+          1.0824687480926514
+        ],
+        "embedding_dimension": 768
+      },
+      {
+        "text1": "This hip-hop album addresses social issues.",
+        "text2": "The rapper discusses political topics in their lyrics.",
+        "human_score": 0.8,
+        "similarity": 0.7666978240013123,
+        "embedding1_sample": [
+          0.0699479803442955,
+          -0.14067338407039642,
+          -3.785458564758301,
+          0.4873234033584595,
+          1.14872145652771
+        ],
+        "embedding2_sample": [
+          -0.3315431475639343,
+          0.22598797082901,
+          -3.3945086002349854,
+          -0.47145432233810425,
+          1.9594684839248657
+        ],
+        "embedding_dimension": 768
+      },
+      {
+        "text1": "The production quality is excellent.",
+        "text2": "The album sounds terrible.",
+        "human_score": 0.1,
+        "similarity": 0.44570422172546387,
+        "embedding1_sample": [
+          0.4735547602176666,
+          1.1918524503707886,
+          -4.311034679412842,
+          0.30219998955726624,
+          -0.1535060852766037
+        ],
+        "embedding2_sample": [
+          1.3588743209838867,
+          -0.29410508275032043,
+          -3.490753650665283,
+          -0.0426318496465683,
+          0.8425650000572205
+        ],
+        "embedding_dimension": 768
+      }
+    ]
+  }
+}

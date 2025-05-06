@@ -1,0 +1,74 @@
+{
+  "bge-small-en-v1.5": {
+    "model_id": "BAAI/bge-small-en-v1.5",
+    "coherence": {
+      "avg_coherence": 0.6946632862091064,
+      "min_coherence": 0.37104928493499756,
+      "max_coherence": 0.9872875213623047,
+      "coherence_std": 0.12279299646615982
+    },
+    "section_boundaries": {
+      "avg_within_section_similarity": 0.6889811158180237,
+      "avg_cross_section_similarity": 0.581693172454834,
+      "section_boundary_contrast": 0.1072879433631897,
+      "within_similarity_std": 0.10603798180818558,
+      "cross_similarity_std": 0.11653853207826614
+    },
+    "semantic_search": {
+      "semantic_search_precision": 0.55,
+      "min_precision": 0.0,
+      "max_precision": 1.0,
+      "search_precision_std": 0.3674234614174767
+    },
+    "evaluation_time_seconds": 5.376440048217773,
+    "overall_score": 0.4605853688716889
+  },
+  "all-MiniLM-L6-v2": {
+    "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "coherence": {
+      "avg_coherence": 0.449889600276947,
+      "min_coherence": -0.022610783576965332,
+      "max_coherence": 0.9808568358421326,
+      "coherence_std": 0.24648341536521912
+    },
+    "section_boundaries": {
+      "avg_within_section_similarity": 0.46986323595046997,
+      "avg_cross_section_similarity": 0.20395416021347046,
+      "section_boundary_contrast": 0.2659090757369995,
+      "within_similarity_std": 0.22188912332057953,
+      "cross_similarity_std": 0.21907004714012146
+    },
+    "semantic_search": {
+      "semantic_search_precision": 0.4333333333333333,
+      "min_precision": 0.0,
+      "max_precision": 0.75,
+      "search_precision_std": 0.2758824226207808
+    },
+    "evaluation_time_seconds": 2.3416049480438232,
+    "overall_score": 0.3880729361375173
+  },
+  "gte-large": {
+    "model_id": "thenlper/gte-large",
+    "coherence": {
+      "avg_coherence": 0.8541471362113953,
+      "min_coherence": 0.65580153465271,
+      "max_coherence": 0.9939807057380676,
+      "coherence_std": 0.06189776211977005
+    },
+    "section_boundaries": {
+      "avg_within_section_similarity": 0.8531280159950256,
+      "avg_cross_section_similarity": 0.795383870601654,
+      "section_boundary_contrast": 0.05774414539337158,
+      "within_similarity_std": 0.051070813089609146,
+      "cross_similarity_std": 0.058004047721624374
+    },
+    "semantic_search": {
+      "semantic_search_precision": 0.55,
+      "min_precision": 0.0,
+      "max_precision": 1.0,
+      "search_precision_std": 0.3674234614174767
+    },
+    "evaluation_time_seconds": 34.89079809188843,
+    "overall_score": 0.49356738448143006
+  }
+}
