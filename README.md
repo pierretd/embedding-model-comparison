@@ -2,6 +2,8 @@
 
 A comprehensive framework for evaluating and comparing text embedding models. This tool provides metrics for both ground-truth similarity evaluation and document-based evaluation without reference scores.
 
+[![GitHub](https://img.shields.io/badge/GitHub-pierretd/embedding--model--comparison-blue?logo=github)](https://github.com/pierretd/embedding-model-comparison)
+
 ## Features
 
 ### Model Comparison Dashboard
@@ -16,13 +18,14 @@ A comprehensive framework for evaluating and comparing text embedding models. Th
   - **Section Boundary Contrast**: Tests models' ability to distinguish content in different vs. same sections
   - **Semantic Search Precision**: Evaluates retrieval accuracy for natural language queries
 - **Upload Your Own**: Easily evaluate any text document with the web interface
+- **Real-time Progress Tracking**: Monitor evaluation progress with status updates
 
 ## Installation
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/yourusername/embedding-comparison-framework.git
-cd embedding-comparison-framework
+git clone https://github.com/pierretd/embedding-model-comparison.git
+cd embedding-model-comparison
 ```
 
 2. Create a virtual environment (recommended):
@@ -68,23 +71,46 @@ To evaluate a document without the web interface:
 python simple_document_evaluation.py path/to/your/document.txt
 ```
 
-## How It Works
+## Evaluation Metrics Explained
 
 ### Model Comparison
 The framework evaluates embedding models using a set of text pairs with human similarity judgments. It computes:
-- Pearson and Spearman correlations with human judgments
-- Embedding generation speed
-- Model load time
-- Memory usage
+- **Pearson Correlation**: Measures linear correlation with human judgment scores
+- **Spearman Correlation**: Measures rank-order correlation with human judgment scores
+- **Embedding Generation Speed**: Time required to generate embeddings (seconds per text)
+- **Model Load Time**: Time required to load the model into memory
+- **Memory Usage**: Memory footprint of the model during operation
 
 ### Document Evaluation
 For document evaluation without ground truth data, the framework uses three key metrics:
 
-1. **Paragraph Coherence**: Measures how semantically similar adjacent paragraphs are compared to non-adjacent ones. Higher values indicate the model better captures the flow of ideas through the document.
+1. **Paragraph Coherence** (30% of overall score): Measures how semantically similar adjacent paragraphs are compared to non-adjacent ones. Higher values indicate the model better captures the flow of ideas through the document.
 
-2. **Section Boundary Contrast**: Compares similarity within sections vs. across sections. Higher values show the model effectively distinguishes section boundaries.
+   ```
+   Example: gte-large (0.8541) > bge-small (0.6947) > all-MiniLM (0.4499)
+   ```
 
-3. **Semantic Search Precision**: Tests the model's ability to retrieve relevant content based on natural language queries. The system automatically generates document-specific queries.
+2. **Section Boundary Contrast** (30% of overall score): Compares similarity within sections vs. across sections. Higher values show the model effectively distinguishes section boundaries.
+
+   ```
+   Example: all-MiniLM (0.2659) > bge-small (0.1073) > gte-large (0.0577)
+   ```
+
+3. **Semantic Search Precision** (40% of overall score): Tests the model's ability to retrieve relevant content based on natural language queries. The system automatically generates document-specific queries.
+
+   ```
+   Example: gte-large (0.5500) = bge-small (0.5500) > all-MiniLM (0.4333)
+   ```
+
+**Overall Score**: Weighted average of the three metrics above. Higher scores indicate better overall performance for document understanding tasks.
+
+## Performance Observations
+
+Based on extensive testing with various documents:
+
+- **GTE-Large**: Excels at paragraph coherence and semantic search, making it ideal for tasks requiring deep semantic understanding. However, it's significantly slower than other models.
+- **BGE-Small**: Offers a good balance between performance and speed, with strong results across all metrics.
+- **MiniLM**: Fastest model with good section boundary detection, but weaker on paragraph coherence.
 
 ## Adding New Models
 
@@ -96,6 +122,12 @@ models_to_compare = [
     # Add more models here
 ]
 ```
+
+## Known Issues
+
+- **FastEmbed Warning**: When using gte-large, you may see a warning about mean pooling vs. CLS embedding. This doesn't impact results but indicates a change in the model's behavior.
+- **Multiprocessing on macOS**: On some macOS systems, parallel processing may cause pickling errors. The application will automatically fall back to sequential processing if this occurs.
+- **Port Already in Use**: If port 8000 is already in use, specify a different port with `python serve.py --port 8001`.
 
 ## Requirements
 
